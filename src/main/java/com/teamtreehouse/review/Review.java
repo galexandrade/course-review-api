@@ -2,7 +2,9 @@ package com.teamtreehouse.review;
 
 import com.teamtreehouse.core.BaseEntity;
 import com.teamtreehouse.course.Course;
+import com.teamtreehouse.user.User;
 
+import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +13,8 @@ public class Review extends BaseEntity {
     private String description;
     @ManyToOne
     private Course course;
+    @ManyToOne
+    private User reviewer;
 
     public Review() {
         super();
@@ -44,5 +48,13 @@ public class Review extends BaseEntity {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public User getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(User reviewer) {
+        this.reviewer = reviewer;
     }
 }
