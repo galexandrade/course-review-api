@@ -14,8 +14,8 @@ public class ReviewEventHandler {
     private final UserRepository users;
 
     @Autowired
-    public ReviewEventHandler() {
-        users = null;
+    public ReviewEventHandler(UserRepository users) {
+        this.users = users;
     }
 
     @HandleBeforeCreate
