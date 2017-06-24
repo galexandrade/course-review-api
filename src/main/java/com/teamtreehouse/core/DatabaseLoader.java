@@ -30,7 +30,7 @@ public class DatabaseLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         List<User> students = Arrays.asList(
                 new User("alex.andrade", "Alex","Andrade", "123", new String[]{"ROLE_USER"}),
-                new User("user2", "User2","", "123", new String[]{"ROLE_USER", "ROLE_ADM"})
+                new User("user2", "User2","", "1234", new String[]{"ROLE_USER", "ROLE_ADM"})
         );
         users.save(students);
 

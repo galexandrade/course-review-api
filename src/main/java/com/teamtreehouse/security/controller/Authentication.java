@@ -32,7 +32,7 @@ public class Authentication {
         /*TO DO: Verify user credentials here!*/
         User user = users.findByUsername(userName);
 
-        if (user == null)
+        if (user == null || !User.PASSWORD_ENCODER.matches(passWord, user.getPassword()))
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 
         JwtToken jwtToken = new JwtToken(users);
