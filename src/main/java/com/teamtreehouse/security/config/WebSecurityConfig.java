@@ -56,6 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // All urls must be authenticated (filter for token always fires (/**)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/v1/public/auth**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/api/v1/public/auth**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // Call our errorHandler if authentication/authorisation fails

@@ -7,7 +7,12 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import com.teamtreehouse.security.transfer.JwtUserDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Class validates a given token by using the secret configured in the application
@@ -18,8 +23,11 @@ import org.springframework.stereotype.Component;
 public class JwtToken {
     private final UserRepository users;
 
-    //@Value("${jwt.token.secret}")
-    private String secret = "something-secret-you-cannot-keep-it";
+    @Value("${jwt.token.secret}")
+    private String secret;
+    @Value("${jwt.token.expiration_days}")
+    private int EXPIRATION_DAYS;
+
 
     public JwtToken(UserRepository users) {
         this.users = users;
@@ -51,13 +59,22 @@ public class JwtToken {
     }
 
     public String generateToken(User user) {
+
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("userId", user.getId() + "");
         claims.put("role", user.getRoles());
 
         return Jwts.builder()
                 .setClaims(claims)
+                .setExpiration(getExpirationDate())
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
+    }
+
+
+    private Date getExpirationDate() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, EXPIRATION_DAYS);
+        return c.getTime();
     }
 }

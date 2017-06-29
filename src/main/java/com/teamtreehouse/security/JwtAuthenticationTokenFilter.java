@@ -60,8 +60,6 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
             throws IOException, ServletException {
         super.successfulAuthentication(request, response, chain, authResult);
 
-        // As this authentication is in HTTP header, after success we need to continue the request normally
-        // and return the response as if the resource was not secured at all
         chain.doFilter(request, response);
     }
 }
